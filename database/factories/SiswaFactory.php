@@ -17,7 +17,11 @@ class SiswaFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nama' => $this->faker->randomElement(['Ali', 'Budi', 'Citra', 'Dewi']), // Nama acak
+            'kelas' => $this->faker->randomElement(['X A1', 'XII B1', 'XI A1', 'X B1']),    // Kelas acak
+            'username' => $this->faker->userName,                                    // Username acak
+            'password' => bcrypt('password'),                                       // Password terenkripsi
         ];
     }
+    
 }
