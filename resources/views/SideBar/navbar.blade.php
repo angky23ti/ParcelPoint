@@ -48,7 +48,7 @@
             </a>
           </li>
           <li class="sidebar-item">
-            <a class="sidebar-link" href="/siswa" aria-expanded="false">
+            <a class="sidebar-link" href="/Siswa" aria-expanded="false">
               <span><i class="ti ti-user"></i></span>
               <span class="hide-menu">Siswa</span>
             </a>
