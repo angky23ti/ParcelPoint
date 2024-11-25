@@ -13,7 +13,8 @@ class GuruController extends Controller
      */
     public function index()
     {
-        //
+        $data['guru'] = \App\Models\Guru::latest()->paginate(10);
+        return view('guru.index', $data);
     }
 
     /**
