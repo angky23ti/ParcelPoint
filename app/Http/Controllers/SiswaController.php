@@ -13,7 +13,8 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        return view('siswa.index');
+        $data['siswa'] = \App\Models\Siswa::latest()->paginate(10);
+        return view('siswa.index', $data);
     }
 
     /**
