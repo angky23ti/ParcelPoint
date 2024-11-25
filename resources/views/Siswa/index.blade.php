@@ -11,6 +11,8 @@
                     <a href="{{ route('siswa.create') }}" class="btn btn-primary btn-sm">Tambah Siswa</a>
                 </div>
             </div>
+
+            <!-- Tabel data siswa -->
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -22,20 +24,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($siswa as $item)
+                    <!-- Cek jika ada data -->
+                    @forelse ($siswa as $item)
                         <tr>
                             <td>{{ $item->nama }}</td>
                             <td>{{ $item->kelas }}</td>
                             <td>{{ $item->username }}</td>
                             <td>{{ $item->password }}</td> 
                             <td>
-                                <!-- Tombol edit dan hapus bisa disertakan di sini -->
+                                <a href="/siswa/{{ $item->id }}/edit" class="btn btn-warning btn-sm m1-2">Edit</a>
+                                <form action="/siswa/{{ $item->id }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="btn btn-danger btn-sm ml-2"
+                                    onclick="return confirm('Yakin ingin menghapus data?')">Hapus</button>
+                                </form>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center">No data available</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
-            {{ $siswa->links() }}
+
+            <!-- Link pagination, tetap tampil meskipun tidak ada data -->
+            <div class="pagination-wrapper">
+                {!! $siswa->links() !!}
+            </div>
         </div>
     </div>
 @endsection

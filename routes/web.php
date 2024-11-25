@@ -10,16 +10,17 @@ use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Auth;
 // use App\Http\Controllers\Auth\LoginController
 
-Route::get('/', function () {
-    return view('SideBar/navbar');
-});
+
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('siswa',SiswaController::class);
     Route::resource('guru',GuruController::class);
     Route::resource('dashboard',DashboardController::class);
     Route::resource('ujian',UjianController::class);
-    Route::resource('bankSOal',bankSoalController::class);
+    Route::resource('bankSoal',bankSoalController::class);
+    Route::get('/', function () {
+        return view('SideBar/navbar');
+    });
 });
 
 Auth::routes();
