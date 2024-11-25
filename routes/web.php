@@ -10,8 +10,6 @@ use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Auth;
 // use App\Http\Controllers\Auth\LoginController
 
-
-
 Route::middleware(['auth'])->group(function () {
     Route::resource('siswa',SiswaController::class);
     Route::resource('guru',GuruController::class);
