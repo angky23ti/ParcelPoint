@@ -26,6 +26,7 @@
       </div>
 
       <!-- Profile Section -->
+      <br>
       <div class="profile-section text-center mt-3">
         <img src="..\modern/src/assets/images/profile/user-1.jpg" alt="Profile Picture" class="rounded-circle profile-img" width="80">
         <h4 class="mt-2 mb-0">Arifin Ramadhan</h4>
@@ -64,7 +65,7 @@
               <span><i class="ti ti-folder"></i></span>
               <span class="hide-menu">Bank Soal</span>
             </a>
-          </li>
+          </li><br><br><br><br><br><br><br><br><br><br><br>
           <li class="sidebar-item">
             <a class="sidebar-link" href="/logout" aria-expanded="false">
               <span><i class="ti ti-power"></i></span>
@@ -82,6 +83,16 @@
       <!--  Header Start -->
       <header class="app-header">
         <nav class="navbar navbar-expand-lg navbar-light">
+          <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+              <li class="nav-item dropdown">
+                <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <img src="..\modern/src/assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
+                </a>
+              </li>
+            </ul>
+
+          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item d-block d-xl-none">
               <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
@@ -95,32 +106,6 @@
               </a>
             </li>
           </ul>
-          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
-            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-              <li class="nav-item dropdown">
-                <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
-                  aria-expanded="false">
-                  <img src="..\modern/src/assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
-                </a>
-                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
-                  <div class="message-body">
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                      <i class="ti ti-user fs-6"></i>
-                      <p class="mb-0 fs-3">My Profile</p>
-                    </a>
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                      <i class="ti ti-mail fs-6"></i>
-                      <p class="mb-0 fs-3">My Account</p>
-                    </a>
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                      <i class="ti ti-list-check fs-6"></i>
-                      <p class="mb-0 fs-3">My Task</p>
-                    </a>
-                    <a href="/logout" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
-                  </div>
-                </div>
-              </li>
-            </ul>
           </div>
         </nav>
       </header>
@@ -134,6 +119,7 @@
             </main>
       </div>
     </div>
+    
   </div>
   <script src="{{ url('../modern/src/assets/libs/jquery/dist/jquery.min.js') }}"></script>
   <script src="{{ url('../modern/src/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
