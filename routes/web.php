@@ -18,5 +18,4 @@ Route::middleware([Authenticate::class])->group(function () {
     Route::resource('/dashboard', DashboardController::class);
     Route::resource('/ujian', UjianController::class);
     Route::resource('/bankSoal', bankSoalController::class);
-    // Route::resource('daftar', DaftarController::class);
 });

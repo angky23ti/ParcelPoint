@@ -12,10 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('siswas', function (Blueprint $table) {
-            $table->string('nama');
-            $table->string('kelas');
-            $table->string('username');
-            $table->string('password');
+            $table->id(); 
+            $table->string('nisn', 100)->unique(); 
+            $table->string('nama', 100); 
+            $table->string('kelas', 50); 
+            $table->string('username', 50)->unique(); 
+            $table->string('password'); 
+            $table->timestamps();
         });
     }
 
