@@ -19,6 +19,17 @@
                 <h2 class="login-title">Welcome Back!</h2>
                 <p class="login-subtitle">Please sign in to continue</p>
 
+                <!-- Display Validation Errors for Username and Password -->
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <!-- Form Login -->
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
