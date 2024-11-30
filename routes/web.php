@@ -22,9 +22,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('dashboard',DashboardController::class);
     Route::resource('ujian',UjianController::class);
     Route::resource('bankSoal',bankSoalController::class);
-    // Route::get('/', function () {
-    //     return view('SideBar/navbar');
-    // });
 });
 
 Auth::routes();
