@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UjianController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,6 +35,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/guru/{id}/edit', [GuruController::class, 'edit'])->name('guru.edit');
     Route::patch('/guru/{id}', [GuruController::class, 'update'])->name('guru.update');
     Route::delete('/guru/{id}', [GuruController::class, 'destroy'])->name('guru.destroy');
+    // Routes Ujian
+    Route::get('/ujian', [UjianController::class, 'index'])->name('ujian.index');
+    Route::get('/ujian/create', [UjianController::class, 'create'])->name('ujian.create');
+    Route::post('/ujian', [UjianController::class, 'store'])->name('ujian.store');
+    Route::get('/ujian/{id}/edit', [UjianController::class, 'edit'])->name('ujian.edit');
+    Route::patch('/ujian/{id}', [UjianController::class, 'update'])->name('ujian.update');
+    Route::delete('/ujian/{id}', [UjianController::class, 'destroy'])->name('ujian.destroy');
+
 });
 
 require __DIR__.'/auth.php';

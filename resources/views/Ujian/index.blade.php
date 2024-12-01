@@ -9,7 +9,7 @@
             <div class="row mb-3 mt-3">
                 <!-- Tombol tambah Ujian -->
                 <div class="col-md-6">
-                    <a href="{{ route('Ujian.create') }}" class="btn btn-primary btn-sm">Tambah Guru</a>
+                    <a href="{{ route('ujian.create') }}" class="btn btn-primary btn-sm">Tambah Ujian</a>
                 </div>
             </div>
 
@@ -31,15 +31,15 @@
                     @forelse ($ujian as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->kode}}</td>
-                            <td>{{ $item->mapel }}</td>
-                            <td>{{ $item->mulai }}</td>
-                            <td>{{ $item->akhir }}</td>
+                            <td>{{ $item->kode_ujian}}</td>
+                            <td>{{ $item->mata_pelajaran }}</td>
+                            <td>{{ $item->tanggal_mulai }}</td>
+                            <td>{{ $item->tanggal_akhir }}</td>
                             <td>{{ $item->kelas }}</td>
                             <td>{{ $item->status }}</td>
                             <td>
-                                <a href="/siswa/{{ $item->id }}/edit" class="btn btn-warning btn-sm m1-2">Edit</a>
-                                <form action="/siswa/{{ $item->id }}" method="POST" class="d-inline">
+                                <a href="/ujian/{{ $item->id }}/edit" class="btn btn-warning btn-sm m1-2">Edit</a>
+                                <form action="/ujian/{{ $item->id }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('delete')
                                     <button class="btn btn-danger btn-sm ml-2"
@@ -57,7 +57,7 @@
 
             <!-- Pagination -->
             <div class="d-flex justify-content-center">
-                {!! $siswa->links() !!}
+                {!! $ujian->links() !!}
             </div>
         </div>
     </div>

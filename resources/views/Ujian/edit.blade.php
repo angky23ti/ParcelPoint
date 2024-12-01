@@ -1,41 +1,72 @@
-@extends('SideBar.navbar', ['title' => 'Tambah Data Siswa'])
+@extends('SideBar.navbar', ['title' => 'Tambah Data Ujian'])
 @section('content')
     <div class="card">
         <div class="card-body">
             <center>
-                <h5 class="card-header">Tambah Data Siswa</h5>
+                <h5 class="card-header">Tambah Data Ujian</h5>
             </center>
-            <form action="/siswa" method="POST" enctype="multipart/form-data">
+            <form action="/ujian" method="POST" enctype="multipart/form-data">
                 @csrf
-                <!-- Input NISN -->
+                <!-- Input Kode Ujian -->
                 <div class="form-group mt-1 mb-3">
-                <label for="nisn"><b>NISN</b></label>
+                    <label for="kode_ujian"><b>Kode Ujian</b></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text bg-primary text-white">
-                            <i class="bi bi-person"></i>
-                            </span>
-                        </div>
-                        <input type="text" class="form-control @error('nisn') is-invalid @enderror" id="nisn" name="nisn"
-                        value="{{ old('nisn') ?? $siswa->nisn }}">
-                    </div>
-                    <span class="text-danger">{{ $errors->first('nisn') }}</span>
-                </div>
-
-            <!-- Input Nama -->
-                <div class="form-group mt-1 mb-3">
-                    <label for="nama"><b>Nama</b></label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text bg-primary text-white">
-                                <i class="bi bi-person"></i>
+                                <i class="bi bi-key"></i>
                             </span>
                         </div>
                         <input type="text"
-                               class="form-control @error('nama') is-invalid @enderror"
-                               id="nama" name="nama" placeholder="Masukkan nama lengkap" value="{{ old('nama') ?? $siswa->nama}}">
+                               class="form-control @error('kode_ujian') is-invalid @enderror"
+                               id="kode_ujian" name="kode_ujian" placeholder="Masukkan Kode Ujian" value="{{ old('kode_ujian') }}">
                     </div>
-                    <span class="text-danger">{{ $errors->first('nama') }}</span>
+                    <span class="text-danger">{{ $errors->first('kode_ujian') }}</span>
+                </div>
+
+                <!-- Input Mata Pelajaran -->
+                <div class="form-group mt-1 mb-3">
+                    <label for="mata_pelajaran"><b>Mata Pelajaran</b></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-primary text-white">
+                                <i class="bi bi-book"></i>
+                            </span>
+                        </div>
+                        <input type="text"
+                               class="form-control @error('mata_pelajaran') is-invalid @enderror"
+                               id="mata_pelajaran" name="mata_pelajaran" placeholder="Masukkan Mata Pelajaran" value="{{ old('mata_pelajaran') }}">
+                    </div>
+                    <span class="text-danger">{{ $errors->first('mata_pelajaran') }}</span>
+                </div>
+
+                <!-- Input Tanggal Mulai -->
+                <div class="form-group mt-1 mb-3">
+                    <label for="tanggal_mulai"><b>Tanggal Mulai</b></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-primary text-white">
+                                <i class="bi bi-calendar"></i>
+                            </span>
+                        </div>
+                        <input type="date" class="form-control @error('tanggal_mulai') is-invalid @enderror"
+                               id="tanggal_mulai" name="tanggal_mulai" value="{{ old('tanggal_mulai') }}">
+                    </div>
+                    <span class="text-danger">{{ $errors->first('tanggal_mulai') }}</span>
+                </div>
+
+                <!-- Input Tanggal Akhir -->
+                <div class="form-group mt-1 mb-3">
+                    <label for="tanggal_akhir"><b>Tanggal Akhir</b></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-primary text-white">
+                                <i class="bi bi-calendar"></i>
+                            </span>
+                        </div>
+                        <input type="date" class="form-control @error('tanggal_akhir') is-invalid @enderror"
+                               id="tanggal_akhir" name="tanggal_akhir" value="{{ old('tanggal_akhir') }}">
+                    </div>
+                    <span class="text-danger">{{ $errors->first('tanggal_akhir') }}</span>
                 </div>
 
                 <!-- Input Kelas -->
@@ -48,57 +79,27 @@
                             </span>
                         </div>
                         <input type="text" class="form-control @error('kelas') is-invalid @enderror"
-                               id="kelas" name="kelas" placeholder="Masukkan kelas" value="{{ old('kelas') ?? $siswa->kelas }}">
+                               id="kelas" name="kelas" placeholder="Masukkan Kelas" value="{{ old('kelas') }}">
                     </div>
                     <span class="text-danger">{{ $errors->first('kelas') }}</span>
                 </div>
 
-                <!-- Input Username -->
+                <!-- Input Kode Token -->
                 <div class="form-group mt-1 mb-3">
-                    <label for="username"><b>Username</b></label>
+                    <label for="kode_token"><b>Kode Token</b></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text bg-primary text-white">
-                                <i class="bi bi-person-circle"></i>
+                                <i class="bi bi-shield-lock"></i>
                             </span>
                         </div>
-                        <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username"
-                               placeholder="Masukkan username" value="{{ old('username') ?? $siswa->username }}">
+                        <input type="text" class="form-control @error('kode_token') is-invalid @enderror"
+                               id="kode_token" name="kode_token" placeholder="Masukkan Kode Token" value="{{ old('kode_token') }}">
                     </div>
-                    <span class="text-danger">{{ $errors->first('username') }}</span>
+                    <span class="text-danger">{{ $errors->first('kode_token') }}</span>
                 </div>
 
-                <!-- Input Password -->
-                <div class="form-group mt-1 mb-3">
-                    <label for="password"><b>Password</b></label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text bg-primary text-white">
-                                <i class="bi bi-lock"></i>
-                            </span>
-                        </div>
-                        <input type="password" class="form-control @error('password') is-invalid @enderror"
-                            id="password" name="password" placeholder="Masukkan password">
-                    </div>
-                    <span class="text-danger">{{ $errors->first('password') }}</span>
-                </div>
-
-                <!-- Input Foto -->
-                <div class="form-group mt-1 mb-3">
-                    <label for="foto"><b>Foto Pasien</b></label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text bg-primary text-white">
-                                <i class="bi bi-camera"></i>
-                            </span>
-                        </div>
-                        <input type="file" class="form-control @error('foto') is-invalid @enderror" id="foto" name="foto">
-                    </div>
-                    <span class="text-danger">{{ $errors->first('foto') }}</span>
-                    <img src="{{  Storage::url($siswa->foto) }}" alt="Foto Siswa" class="img-thumbnail mt-2"
-                        style="width: 100px">
-                </div>
-                <button type="submit" class="btn btn-primary">UPDATE</button>
+                <button type="submit" class="btn btn-primary w-100">SIMPAN</button>
             </form>
         </div>
     </div>
