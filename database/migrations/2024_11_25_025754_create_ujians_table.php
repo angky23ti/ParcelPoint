@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id(); 
             $table->string('kode_ujian', 100)->unique(); 
             $table->string('mata_pelajaran', 100); 
+            $table->date('tanggal_mulai');
+            $table->date('tanggal_akhir');
             $table->string('kelas', 50); 
             $table->string('kode_token', 50)->unique(); 
             $table->string('status'); 

@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/guru/{id}/edit', [GuruController::class, 'edit'])->name('guru.edit');
     Route::patch('/guru/{id}', [GuruController::class, 'update'])->name('guru.update');
     Route::delete('/guru/{id}', [GuruController::class, 'destroy'])->name('guru.destroy');
+    
     // Routes Ujian
     Route::get('/ujian', [UjianController::class, 'index'])->name('ujian.index');
     Route::get('/ujian/create', [UjianController::class, 'create'])->name('ujian.create');
