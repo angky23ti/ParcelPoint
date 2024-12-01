@@ -1,4 +1,5 @@
 @extends('SideBar.navbar', ['title' => 'Data Siswa'])
+
 @section('content')
     <div class="card">
         <center>
@@ -8,14 +9,15 @@
             <div class="row mb-3 mt-3">
                 <!-- Tombol tambah siswa -->
                 <div class="col-md-6">
-                    <a href="{{ route('siswa.create') }}" class="btn btn-primary btn-sm">Tambah Siswa</a>
+                    <a href="{{ route('siswa.create') }}" class="btn btn-primary btn-sm">Tambah Guru</a>
                 </div>
             </div>
 
-            <!-- Tabel data siswa -->
             <table class="table table-striped">
                 <thead>
                     <tr>
+                        <th>No</th>
+                        <th>NISN</th>
                         <th>Nama</th>
                         <th>Kelas</th>
                         <th>Username</th>
@@ -27,10 +29,19 @@
                     <!-- Cek jika ada data -->
                     @forelse ($siswa as $item)
                         <tr>
-                            <td>{{ $item->nama }}</td>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->nisn }}</td>
+                            <td>
+                                @if($item->foto)
+                                    <a href="{{ \Storage::url($item->foto) }}" target="_blank">
+                                        <img src="{{ \Storage::url($item->foto) }}" style="max-width: 50px; height: auto;" />
+                                    </a>
+                                @endif
+                                {{ $item->nama }}
+                            </td>
                             <td>{{ $item->kelas }}</td>
                             <td>{{ $item->username }}</td>
-                            <td>{{ $item->password }}</td> 
+                            <td>{{ $item->password }}</td>
                             <td>
                                 <a href="/siswa/{{ $item->id }}/edit" class="btn btn-warning btn-sm m1-2">Edit</a>
                                 <form action="/siswa/{{ $item->id }}" method="POST" class="d-inline">
@@ -43,14 +54,14 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center">No data available</td>
+                            <td colspan="7" class="text-center">No data available</td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
 
-            <!-- Link pagination, tetap tampil meskipun tidak ada data -->
-            <div class="pagination-wrapper">
+            <!-- Pagination -->
+            <div class="d-flex justify-content-center">
                 {!! $siswa->links() !!}
             </div>
         </div>

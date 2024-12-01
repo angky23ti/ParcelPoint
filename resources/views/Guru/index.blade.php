@@ -1,4 +1,5 @@
 @extends('SideBar.navbar', ['title' => 'Data Guru'])
+
 @section('content')
     <div class="card">
         <center>
@@ -6,18 +7,18 @@
         </center>
         <div class="card-body">
             <div class="row mb-3 mt-3">
-                <!-- Tombol tambah guru -->
+                <!-- Tombol tambah Guru -->
                 <div class="col-md-6">
-                    <a href="{{ route('guru.create') }}" class="btn btn-primary btn-sm">Tambah Guru</a>
+                    <a href="{{ route('guru.create') }}" class="btn btn-primary btn-sm">Tambah Siswa</a>
                 </div>
             </div>
 
-            <!-- Tabel data guru -->
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Nama Guru</th>
-                        <th>Kode Guru</th>
+                        <th>No</th>
+                        <th>NIP</th>
+                        <th>Nama</th>
                         <th>Kelas</th>
                         <th>Username</th>
                         <th>Password</th>
@@ -28,14 +29,22 @@
                     <!-- Cek jika ada data -->
                     @forelse ($guru as $item)
                         <tr>
-                            <td>{{ $item->nama_guru }}</td>
-                            <td>{{ $item->kode_guru }}</td>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->nip }}</td>
+                            <td>
+                                @if($item->foto)
+                                    <a href="{{ \Storage::url($item->foto) }}" target="_blank">
+                                        <img src="{{ \Storage::url($item->foto) }}" style="max-width: 50px; height: auto;" />
+                                    </a>
+                                @endif
+                                {{ $item->nama }}
+                            </td>
                             <td>{{ $item->kelas }}</td>
                             <td>{{ $item->username }}</td>
                             <td>{{ $item->password }}</td>
                             <td>
-                                <a href="/guru/{{ $item->id }}/edit" class="btn btn-warning btn-sm m1-2">Edit</a>
-                                <form action="/guru/{{ $item->id }}" method="POST" class="d-inline">
+                                <a href="/siswa/{{ $item->id }}/edit" class="btn btn-warning btn-sm m1-2">Edit</a>
+                                <form action="/siswa/{{ $item->id }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('delete')
                                     <button class="btn btn-danger btn-sm ml-2"
@@ -45,14 +54,14 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center">No data available</td>
+                            <td colspan="7" class="text-center">No data available</td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
 
-            <!-- Link pagination, tetap tampil meskipun tidak ada data -->
-            <div class="pagination-wrapper">
+            <!-- Pagination -->
+            <div class="d-flex justify-content-center">
                 {!! $guru->links() !!}
             </div>
         </div>

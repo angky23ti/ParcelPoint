@@ -1,84 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <link rel="stylesheet" href="css/login.css">
-</head>
-<body>
-<div class="login-container">
-    <div class="login-card">
-        <!-- Left Section (Profile Image) -->
-        <div class="profile-section">
-            <div class="profile-container">
-                <img src="../modern/src/assets/images/backgrounds/IlustrasiUjian.jpg" alt="Profile Image" class="profile-img">
-            </div>
+<x-guest-layout>
+    <!-- Session Status -->
+    <x-auth-session-status class="mb-4" :status="session('status')" />
+
+    <form method="POST" action="{{ route('login') }}">
+        @csrf
+
+        <!-- Email Address -->
+        <div>
+            <x-input-label for="email" :value="__('Email')" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Right Section (Login Form) -->
-        <div class="form-section">
-            <center><img src="../modern/src/assets/images/logos/Ujify-Logo.svg" alt="Logo Ujify" width="200px" height="80px"></center>
-            <h2 class="login-title"><center>Selamat Datang Kembali!</center></h2>
-            <p class="login-subtitle"><center>Silahkan Masukkan Username & Password</center></p><br>
+        <!-- Password -->
+        <div class="mt-4">
+            <x-input-label for="password" :value="__('Password')" />
 
-            <!-- Display Validation Errors -->
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+            <x-text-input id="password" class="block mt-1 w-full"
+                            type="password"
+                            name="password"
+                            required autocomplete="current-password" />
 
-            <!-- Form Login -->
-            <form method="POST" action="{{ route('login') }}">
-                @csrf
-                <!-- Username -->
-                <div class="input-group">
-                    <label for="username"><b>ID (NIP/NISN)</b></label>
-                    <input id="username" type="text" placeholder="8087655436" class="input-field @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
-                    @error('username')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        </div>
 
-                </div>
+        <!-- Remember Me -->
+        <div class="block mt-4">
+            <label for="remember_me" class="inline-flex items-center">
+                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
+                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
+            </label>
+        </div>
 
-                <!-- Password -->
-                <div class="input-group">
-                    <label for="password"><b>Password</b></label>
-                    <input id="password" placeholder="********" type="password" class="input-field @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-                    @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-
-                <!-- Remember Me -->
-                <div class="remember-me">
-                    <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                    <label for="remember">Remember me</label>
-                </div>
-
-                <!-- Login Button -->
-                <div class="form-group">
-                    <button type="submit" class="login-btn">Login</button>
-                </div>
-            </form>
-
-            <!-- Forgot Password -->
+        <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))
-                <div class="forgot-password">
-                    <a href="{{ route('password.request') }}"><center>Ganti Password?</center></a>
-                </div>
+                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
+                    {{ __('Forgot your password?') }}
+                </a>
             @endif
+
+            <x-primary-button class="ms-3">
+                {{ __('Log in') }}
+            </x-primary-button>
         </div>
-    </div>
-</div>
-</body>
-</html>
+    </form>
+</x-guest-layout>
