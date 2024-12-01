@@ -76,41 +76,34 @@ class GuruController extends Controller
      */
     public function update(UpdateguruRequest $request, string $id)
     {
-        // Validasi data input
+
         $requestData = $request->validate([
-            'nisn' => 'required|unique:gurus,nisn,' . $id, // Unik kecuali untuk ID saat ini
+            'nisn' => 'required|unique:gurus,nisn,' . $id, 
             'nama' => 'required|string|max:255',
             'kelas' => 'required|string|max:100',
-            'username' => 'required|unique:gurus,username,' . $id, // Unik kecuali untuk ID saat ini
-            'password' => 'nullable|string|min:6', // Password opsional
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2000', // Foto opsional
+            'username' => 'required|unique:gurus,username,' . $id,
+            'password' => 'nullable|string|min:6',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2000',
         ]);
 
-        // Ambil data guru berdasarkan ID
         $guru = \App\Models\guru::findOrFail($id);
 
-        // Update data guru
         $guru->fill($requestData);
 
-        // Hash password jika diisi
         if (!empty($requestData['password'])) {
             $guru->password = bcrypt($requestData['password']);
         }
 
-        // Cek apakah ada file foto yang diunggah
+
         if ($request->hasFile('foto')) {
-            // Hapus foto lama jika ada
             if ($guru->foto && Storage::disk('public')->exists($guru->foto)) {
                 Storage::disk('public')->delete($guru->foto);
             }
-            // Simpan foto baru dan update path-nya
             $guru->foto = $request->file('foto')->store('guru_foto', 'public'); // Disimpan di folder 'guru_foto'
         }
 
-        // Simpan perubahan ke database
         $guru->save();
 
-        // Redirect ke halaman daftar guru dengan pesan sukses
         return redirect('/guru')->with('success', 'Data guru berhasil diupdate.');
     }
 
@@ -121,15 +114,12 @@ class GuruController extends Controller
     {
         $guru = \App\Models\guru::findOrFail($id);
 
-        // Hapus foto lama jika ada
         if ($guru->foto != null && Storage::disk('public')->exists($guru->foto)) {
             Storage::disk('public')->delete($guru->foto);
         }
 
-        // Hapus data guru
         $guru->delete();
 
-        // Redirect ke halaman daftar guru
         return redirect('/guru')->with('success', 'Data guru berhasil dihapus.');
     }
 }
