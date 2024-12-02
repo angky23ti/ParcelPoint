@@ -42,9 +42,9 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link {{ Request::is('ujian') ? 'active' : '' }}" href="/ujian" aria-expanded="false">
-                <span><i class="ti ti-file-text"></i></span>
-                <span class="hide-menu">Ujian</span>
+              <a class="sidebar-link {{ Request::is('kelas') ? 'active' : '' }}" href="/kelas" aria-expanded="false">
+                <span><i class="ti ti-folder"></i></span>
+                <span class="hide-menu">Kelas</span>
               </a>
             </li>
             <li class="sidebar-item">
@@ -60,9 +60,9 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link {{ Request::is('bankSoal') ? 'active' : '' }}" href="/bankSoal" aria-expanded="false">
-                <span><i class="ti ti-folder"></i></span>
-                <span class="hide-menu">Bank Soal</span>
+              <a class="sidebar-link {{ Request::is('ujian') ? 'active' : '' }}" href="/ujian" aria-expanded="false">
+                <span><i class="ti ti-file-text"></i></span>
+                <span class="hide-menu">Ujian</span>
               </a>
             </li><br><br><br><br><br><br><br><br><br><br><br>
             <li class="sidebar-item">
