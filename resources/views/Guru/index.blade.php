@@ -43,8 +43,8 @@
                             <td>{{ $item->username }}</td>
                             <td>{{ $item->password }}</td>
                             <td>
-                                <a href="/siswa/{{ $item->id }}/edit" class="btn btn-warning btn-sm m1-2">Edit</a>
-                                <form action="/siswa/{{ $item->id }}" method="POST" class="d-inline">
+                                <a href="/guru/{{ $item->id }}/edit" class="btn btn-warning btn-sm m1-2">Edit</a>
+                                <form action="/guru/{{ $item->id }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('delete')
                                     <button class="btn btn-danger btn-sm ml-2"

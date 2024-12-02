@@ -5,7 +5,7 @@
             <center>
                 <h5 class="card-header">Tambah Data Guru</h5>
             </center>
-            <form action="/Guru" method="POST" enctype="multipart/form-data">
+            <form action="/guru" method="POST" enctype="multipart/form-data">
                 @csrf
                 <!-- Input nip -->
                 <div class="form-group mt-1 mb-3">
