@@ -9,7 +9,7 @@
             <div class="row mb-3 mt-3">
                 <!-- Tombol tambah Guru -->
                 <div class="col-md-6">
-                    <a href="{{ route('guru.create') }}" class="btn btn-primary btn-sm">Tambah Guru</a>
+                    <a href="{{ route('guru.create') }}" class="btn btn-primary btn-sm">Tambah Siswa</a>
                 </div>
             </div>
 

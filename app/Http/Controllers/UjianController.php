@@ -13,8 +13,7 @@ class UjianController extends Controller
      */
     public function index()
     {
-        $ujian = \App\Models\Ujian::latest()->paginate(10);
-        return view('ujian.index', compact('ujian'));
+        //
     }
 
     /**
@@ -22,7 +21,7 @@ class UjianController extends Controller
      */
     public function create()
     {
-        return view('ujian.create');
+        //
     }
 
     /**

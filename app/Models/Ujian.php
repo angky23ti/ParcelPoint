@@ -9,5 +9,4 @@ class Ujian extends Model
 {
     /** @use HasFactory<\Database\Factories\UjianFactory> */
     use HasFactory;
-    protected $guarded= [];
 }
