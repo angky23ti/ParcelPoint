@@ -29,7 +29,7 @@
         <div class="profile-section text-center mt-3">
           <img src="..\..\modern/src/assets/images/profile/user-1.jpg" alt="Profile Picture" class="rounded-circle profile-img" width="80">
           <h4 class="mt-2 mb-0">{{ Auth::user()->name }}</h4>
-          <p class="text-muted">123456 <!-- {{ Auth::user()->nik_nip }} //modifikasi agar sidebar bersifat dynamic --> </p>
+          <p class="text-muted">{{ Auth::user()->nik_nip }}  </p>
         </div>
 
         <!-- Menu Navigation -->
@@ -66,10 +66,13 @@
               </a>
             </li><br><br><br><br><br><br><br><br><br><br><br>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="/logout" aria-expanded="false">
-                <span><i class="ti ti-power"></i></span>
-                <span class="hide-menu">Keluar</span>
-              </a>
+                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit" class="sidebar-link" style="background: none; border: none; padding: 0; width: 100%; text-align: left;">
+                        <span><i class="ti ti-power"></i></span>
+                        <span class="hide-menu">Keluar</span>
+                    </button>
+                </form>
             </li>
           </ul>
         </nav>
