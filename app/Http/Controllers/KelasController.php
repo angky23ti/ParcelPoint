@@ -34,24 +34,23 @@ class KelasController extends Controller
     public function store(StoreKelasRequest $request)
     {
         // Validasi data dari request
-    $requestData = $request->validate([
-        'nama' => 'nullable',
-        'lantai' => 'nullable',
-        'wali_kelas' => 'nullable', 
-        'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2000', 
-    ]);
+        $requestData = $request->validate([
+            'nama' => 'nullable',
+            'lantai' => 'nullable',
+            'wali_kelas' => 'nullable', 
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2000', 
+        ]); 
 
-    $kelas = new \App\Models\Kelas();
-    $kelas->fill($requestData); 
+        $kelas = new \App\Models\Kelas();
+        $kelas->fill($requestData); 
 
-    // Cek apakah ada file foto yang diunggah
-    if ($request->hasFile('foto')) {
-        $kelas->foto = $request->file('foto')->store('kelas_foto', 'public');
-    }
+        if ($request->hasFile('foto')) {
+            $kelas->foto = $request->file('foto')->store('kelas_foto', 'public');
+        }
 
-    $kelas->save();
+        $kelas->save();
 
-    return redirect('/kelas')->with('success', 'Data kelas berhasil ditambahkan!');
+        return redirect('/kelas')->with('success', 'Data kelas berhasil ditambahkan!');
     }
 
     /**
@@ -88,22 +87,16 @@ class KelasController extends Controller
 
         $kelas->fill($requestData);
 
-        // Jika ada password baru, hash dan update password
         if ($request->filled('password')) {
             $kelas->password = bcrypt($request->password);
         }
 
-        // Jika ada foto yang diupload, hapus foto lama dan simpan foto baru
         if ($request->hasFile('foto')) {
-        // Hapus foto lama jika ada
             if ($kelas->foto && Storage::disk('public')->exists($kelas->foto)) {
                 Storage::disk('public')->delete($kelas->foto);
             }
-        // Simpan foto baru
         $kelas->foto = $request->file('foto')->store('kelas_foto', 'public');
         }
-
-        // Simpan perubahan ke database
         $kelas->save();
 
         return redirect('/kelas')->with('success', 'Data kelas berhasil diupdate.');
