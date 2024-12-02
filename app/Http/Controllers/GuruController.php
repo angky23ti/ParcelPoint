@@ -34,12 +34,12 @@ class GuruController extends Controller
     public function store(StoreguruRequest $request)
     {
         $requestData = $request->validate([
-            'nip' => 'required|unique:gurus,nip', // Validasi unique untuk nisn
-            'nama' => 'required',
-            'kelas' => 'required',
-            'username' => 'required|unique:gurus,username', // Validasi unique untuk username
+            'nip' => 'nullable|unique:gurus,nip', // Validasi unique untuk nisn
+            'nama' => 'nullable',
+            'kelas' => 'nullable',
+            'username' => 'nullable|unique:gurus,username', // Validasi unique untuk username
             'password' => 'required',
-            'foto' => 'required|image|mimes:jpeg,png,jpg|max:2000', // Validasi foto
+            'foto' => 'image|mimes:jpeg,png,jpg|max:2000', // Validasi foto
         ]);
 
         $guru = new \App\Models\guru(); // Membuat objek guru baru
@@ -78,12 +78,12 @@ class GuruController extends Controller
     {
 
         $requestData = $request->validate([
-            'nisn' => 'required|unique:gurus,nisn,' . $id, 
-            'nama' => 'required|string|max:255',
-            'kelas' => 'required|string|max:100',
-            'username' => 'required|unique:gurus,username,' . $id,
-            'password' => 'nullable|string|min:6',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2000',
+            'nisn' => 'nullable|unique:gurus,nip,' . $id, 
+            'nama' => 'nullable',
+            'kelas' => 'nullable',
+            'username' => 'nullable|unique:gurus,username,' . $id,
+            'password' => 'required',
+            'foto' => 'image|mimes:jpeg,png,jpg|max:2000',
         ]);
 
         $guru = \App\Models\guru::findOrFail($id);

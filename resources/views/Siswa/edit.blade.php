@@ -5,8 +5,9 @@
             <center>
                 <h5 class="card-header">Tambah Data Siswa</h5>
             </center>
-            <form action="/siswa" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('siswa.update', $siswa->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <!-- Input NISN -->
                 <div class="form-group mt-1 mb-3">
                 <label for="nisn"><b>NISN</b></label>

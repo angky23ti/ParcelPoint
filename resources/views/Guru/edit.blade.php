@@ -1,28 +1,31 @@
-@extends('SideBar.navbar', ['title' => 'Tambah Data Guru'])
+@extends('SideBar.navbar', ['title' => 'Edit Data Siswa'])
 @section('content')
     <div class="card">
         <div class="card-body">
             <center>
-                <h5 class="card-header">Tambah Data Guru</h5>
+                <h5 class="card-header">Edit Data Siswa</h5>
             </center>
-            <form action="/Guru" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('guru.update', $guru->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <!-- Input nip -->
+                @method('PUT')  <!-- Method PUT untuk update -->
+
+                <!-- Input NISN -->
                 <div class="form-group mt-1 mb-3">
-                <label for="nip"><b>NIP</b></label>
+                    <label for="nisn"><b>NISN</b></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text bg-primary text-white">
-                            <i class="bi bi-person"></i>
+                                <i class="bi bi-person"></i>
                             </span>
                         </div>
-                        <input type="text" class="form-control @error('nip') is-invalid @enderror" id="nip" name="nip"
-                        value="{{ old('nip') ?? $Guru->nip }}">
+                        <input type="text"
+                               class="form-control @error('nisn') is-invalid @enderror"
+                               id="nisn" name="nisn" value="{{ old('nisn', $siswa->nisn) }}">
                     </div>
-                    <span class="text-danger">{{ $errors->first('nip') }}</span>
+                    <span class="text-danger">{{ $errors->first('nisn') }}</span>
                 </div>
 
-            <!-- Input Nama -->
+                <!-- Input Nama -->
                 <div class="form-group mt-1 mb-3">
                     <label for="nama"><b>Nama</b></label>
                     <div class="input-group">
@@ -33,7 +36,7 @@
                         </div>
                         <input type="text"
                                class="form-control @error('nama') is-invalid @enderror"
-                               id="nama" name="nama" placeholder="Masukkan nama lengkap" value="{{ old('nama') ?? $Guru->nama}}">
+                               id="nama" name="nama" placeholder="Masukkan nama lengkap" value="{{ old('nama', $siswa->nama) }}">
                     </div>
                     <span class="text-danger">{{ $errors->first('nama') }}</span>
                 </div>
@@ -48,7 +51,7 @@
                             </span>
                         </div>
                         <input type="text" class="form-control @error('kelas') is-invalid @enderror"
-                               id="kelas" name="kelas" placeholder="Masukkan kelas" value="{{ old('kelas') ?? $Guru->kelas }}">
+                               id="kelas" name="kelas" placeholder="Masukkan kelas" value="{{ old('kelas', $siswa->kelas) }}">
                     </div>
                     <span class="text-danger">{{ $errors->first('kelas') }}</span>
                 </div>
@@ -63,7 +66,7 @@
                             </span>
                         </div>
                         <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username"
-                               placeholder="Masukkan username" value="{{ old('username') ?? $Guru->username }}">
+                               placeholder="Masukkan username" value="{{ old('username', $siswa->username) }}">
                     </div>
                     <span class="text-danger">{{ $errors->first('username') }}</span>
                 </div>
@@ -85,7 +88,7 @@
 
                 <!-- Input Foto -->
                 <div class="form-group mt-1 mb-3">
-                    <label for="foto"><b>Foto Pasien</b></label>
+                    <label for="foto"><b>Foto</b></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text bg-primary text-white">
@@ -95,9 +98,12 @@
                         <input type="file" class="form-control @error('foto') is-invalid @enderror" id="foto" name="foto">
                     </div>
                     <span class="text-danger">{{ $errors->first('foto') }}</span>
-                    <img src="{{  Storage::url($Guru->foto) }}" alt="Foto Guru" class="img-thumbnail mt-2"
+                    @if ($siswa->foto)
+                        <img src="{{ Storage::url($siswa->foto) }}" alt="Foto Siswa" class="img-thumbnail mt-2"
                         style="width: 100px">
+                    @endif
                 </div>
+
                 <button type="submit" class="btn btn-primary">UPDATE</button>
             </form>
         </div>

@@ -32,25 +32,31 @@ class SiswaController extends Controller
      */
     public function store(StoreSiswaRequest $request)
     {
-        $requestData = $request->validate([
-            'nisn' => 'required|unique:siswas,nisn', // Validasi unique untuk nisn
-            'nama' => 'required',
-            'kelas' => 'required',
-            'username' => 'required|unique:siswas,username', // Validasi unique untuk username
-            'password' => 'required',
-            'foto' => 'required|image|mimes:jpeg,png,jpg|max:2000', // Validasi foto
-        ]);
+        // Validasi data dari request
+    $requestData = $request->validate([
+        'nisn' => 'nullable|unique:siswas,nisn', // Validasi unique untuk nisn
+        'nama' => 'nullable',
+        'kelas' => 'nullable',
+        'username' => 'nullable|unique:siswas,username', // Validasi unique untuk username
+        'password' => 'required',
+        'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2000', // Validasi foto
+    ]);
 
-        $siswa = new \App\Models\Siswa(); // Membuat objek siswa baru
-        $siswa->fill($requestData); // Mengisi data siswa dengan data yang sudah divalidasi
+    // Membuat objek siswa baru
+    $siswa = new \App\Models\Siswa();
+    $siswa->fill($requestData); // Mengisi data siswa dengan data yang sudah divalidasi
 
-        // Menyimpan foto ke folder 'siswa_foto' di disk 'public'
+    // Cek apakah ada file foto yang diunggah
+    if ($request->hasFile('foto')) {
+        // Simpan foto ke folder 'siswa_foto' di disk 'public'
         $siswa->foto = $request->file('foto')->store('siswa_foto', 'public');
+    }
 
-        $siswa->save(); // Menyimpan data siswa ke database
+    // Menyimpan data siswa ke database
+    $siswa->save();
 
-        // Redirect ke halaman siswa dengan pesan sukses
-        return redirect('/siswa')->with('success', 'Data siswa berhasil ditambahkan!');
+    // Redirect ke halaman siswa dengan pesan sukses
+    return redirect('/siswa')->with('success', 'Data siswa berhasil ditambahkan!');
     }
 
     /**
@@ -77,12 +83,12 @@ class SiswaController extends Controller
     {
         // Validasi data input
         $requestData = $request->validate([
-            'nisn' => 'required|unique:siswas,nisn,' . $id, // Unik kecuali untuk ID saat ini
-            'nama' => 'required|string|max:255',
-            'kelas' => 'required|string|max:100',
-            'username' => 'required|unique:siswas,username,' . $id, // Unik kecuali untuk ID saat ini
-            'password' => 'nullable|string|min:6', // Password opsional
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2000', // Foto opsional
+            'nisn' => 'nullable|unique:siswas,nisn,' . $id, // Unik kecuali untuk ID saat ini
+            'nama' => 'nullable',
+            'kelas' => 'nullable',
+            'username' => 'nullable|unique:siswas,username,' . $id, // Unik kecuali untuk ID saat ini
+            'password' => 'required', // Password opsionl
+            'foto' => 'image|mimes:jpeg,png,jpg|max:2000', // Foto opsional
         ]);
 
         // Ambil data siswa berdasarkan ID
@@ -91,19 +97,19 @@ class SiswaController extends Controller
         // Update data siswa
         $siswa->fill($requestData);
 
-        // Hash password jika diisi
-        if (!empty($requestData['password'])) {
-            $siswa->password = bcrypt($requestData['password']);
+        // Jika ada password baru, hash dan update password
+        if ($request->filled('password')) {
+            $siswa->password = bcrypt($request->password);
         }
 
-        // Cek apakah ada file foto yang diunggah
+        // Jika ada foto yang diupload, hapus foto lama dan simpan foto baru
         if ($request->hasFile('foto')) {
-            // Hapus foto lama jika ada
+        // Hapus foto lama jika ada
             if ($siswa->foto && Storage::disk('public')->exists($siswa->foto)) {
                 Storage::disk('public')->delete($siswa->foto);
             }
-            // Simpan foto baru dan update path-nya
-            $siswa->foto = $request->file('foto')->store('siswa_foto', 'public'); // Disimpan di folder 'siswa_foto'
+        // Simpan foto baru
+        $siswa->foto = $request->file('foto')->store('siswa_foto', 'public');
         }
 
         // Simpan perubahan ke database
