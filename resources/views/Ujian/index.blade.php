@@ -28,7 +28,11 @@
                 </thead>
                 <tbody>
                     <!-- Cek jika ada data -->
+<<<<<<< HEAD
                     @forelse ($ujian as $item)
+=======
+                    @forelse ($siswa as $item)
+>>>>>>> c9a972f5a3beadb822cb1c416055d71f5ca86321
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->nisn }}</td>
@@ -44,8 +48,13 @@
                             <td>{{ $item->username }}</td>
                             <td>{{ $item->password }}</td>
                             <td>
+<<<<<<< HEAD
                                 <a href="/ujian/{{ $item->id }}/edit" class="btn btn-warning btn-sm m1-2">Edit</a>
                                 <form action="/ujian/{{ $item->id }}" method="POST" class="d-inline">
+=======
+                                <a href="/siswa/{{ $item->id }}/edit" class="btn btn-warning btn-sm m1-2">Edit</a>
+                                <form action="/siswa/{{ $item->id }}" method="POST" class="d-inline">
+>>>>>>> c9a972f5a3beadb822cb1c416055d71f5ca86321
                                     @csrf
                                     @method('delete')
                                     <button class="btn btn-danger btn-sm ml-2"
@@ -63,8 +72,16 @@
 
             <!-- Pagination -->
             <div class="d-flex justify-content-center">
+<<<<<<< HEAD
                 {!! $ujian->links() !!}
             </div>
         </div>
     </div>
 @endsection
+=======
+                {!! $siswa->links() !!}
+            </div>
+        </div>
+    </div>
+@endsection
+>>>>>>> c9a972f5a3beadb822cb1c416055d71f5ca86321
