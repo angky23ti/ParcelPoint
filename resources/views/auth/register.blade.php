@@ -9,6 +9,13 @@
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
+        <!-- NIK / NIP -->
+        <div class="mt-4">
+            <x-input-label for="nik_nip" :value="__('NIK / NIP')" />
+            <x-text-input id="nik_nip" class="block mt-1 w-full" type="text" name="nik_nip" :value="old('nik_nip')" required autocomplete="nik_nip" />
+            <x-input-error :messages="$errors->get('nik_nip')" class="mt-2" />
+        </div>
+
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />

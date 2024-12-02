@@ -28,8 +28,8 @@
         <br>
         <div class="profile-section text-center mt-3">
           <img src="..\..\modern/src/assets/images/profile/user-1.jpg" alt="Profile Picture" class="rounded-circle profile-img" width="80">
-          <h4 class="mt-2 mb-0">Arifin Ramadhan</h4>
-          <p class="text-muted">123456</p>
+          <h4 class="mt-2 mb-0">{{ Auth::user()->name }}</h4>
+          <p class="text-muted">123456 <!-- {{ Auth::user()->nik_nip }} //modifikasi agar sidebar bersifat dynamic --> </p>
         </div>
 
         <!-- Menu Navigation -->
