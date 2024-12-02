@@ -11,10 +11,11 @@ class KelasController extends Controller
 {
 
     /**
-     * Display the user's profile form.
+     * Display a listing of the resource.
      */
     public function index()
     {
+
         $kelas = \App\Models\Kelas::latest()->paginate(10);
         return view('kelas.index', compact('kelas'));
     }
@@ -30,31 +31,35 @@ class KelasController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorekelasRequest $request)
+    public function store(StoreKelasRequest $request)
     {
-        $requestData = $request->validate([
-            'nama' => 'required',
-            'lantai' => 'required',
-            'wali_kelas' => 'nullable',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2000', // Validasi foto
-        ]);
+        // Validasi data dari request
+    $requestData = $request->validate([
+        'nama' => 'nullable',
+        'lantai' => 'nullable',
+        'wali_kelas' => 'nullable', 
+        'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2000', 
+    ]);
 
-        $kelas = new \App\Models\kelas();
-        $kelas->fill($requestData);
+    $kelas = new \App\Models\Kelas();
+    $kelas->fill($requestData); 
 
+    // Cek apakah ada file foto yang diunggah
+    if ($request->hasFile('foto')) {
         $kelas->foto = $request->file('foto')->store('kelas_foto', 'public');
+    }
 
-        $kelas->save();
+    $kelas->save();
 
-        return redirect('/kelas')->with('success', 'Data kelas berhasil ditambahkan!');
+    return redirect('/kelas')->with('success', 'Data kelas berhasil ditambahkan!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(kelas $kelas)
+    public function show(Kelas $kelas)
     {
-        //
+        //Untuk Menampilkan Detail
     }
 
     /**
@@ -69,35 +74,36 @@ class KelasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatekelasRequest $request, string $id)
+    public function update(UpdateKelasRequest $request, string $id)
     {
         // Validasi data input
         $requestData = $request->validate([
-            'nama' => 'required',
-            'lantai' => 'required',
-            'wali_kelas' => 'nullable',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2000', // Validasi foto
+            'nama' => 'nullable',
+            'lantai' => 'nullable',
+            'wali_kelas' => 'nullable', 
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2000', 
         ]);
 
-        $kelas = \App\Models\kelas::findOrFail($id);
+        $kelas = \App\Models\Kelas::findOrFail($id);
 
         $kelas->fill($requestData);
 
-        // Hash password jika diisi
-        if (!empty($requestData['password'])) {
-            $kelas->password = bcrypt($requestData['password']);
+        // Jika ada password baru, hash dan update password
+        if ($request->filled('password')) {
+            $kelas->password = bcrypt($request->password);
         }
 
-        // Cek apakah ada file foto yang diunggah
+        // Jika ada foto yang diupload, hapus foto lama dan simpan foto baru
         if ($request->hasFile('foto')) {
-            // Hapus foto lama jika ada
+        // Hapus foto lama jika ada
             if ($kelas->foto && Storage::disk('public')->exists($kelas->foto)) {
                 Storage::disk('public')->delete($kelas->foto);
             }
-            // Simpan foto baru dan update path-nya
-            $kelas->foto = $request->file('foto')->store('kelas_foto', 'public');
+        // Simpan foto baru
+        $kelas->foto = $request->file('foto')->store('kelas_foto', 'public');
         }
 
+        // Simpan perubahan ke database
         $kelas->save();
 
         return redirect('/kelas')->with('success', 'Data kelas berhasil diupdate.');
@@ -108,7 +114,7 @@ class KelasController extends Controller
      */
     public function destroy(string $id)
     {
-        $kelas = \App\Models\kelas::findOrFail($id);
+        $kelas = \App\Models\Kelas::findOrFail($id);
 
         // Hapus foto lama jika ada
         if ($kelas->foto != null && Storage::disk('public')->exists($kelas->foto)) {
