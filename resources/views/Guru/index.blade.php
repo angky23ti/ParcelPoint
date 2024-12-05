@@ -21,7 +21,6 @@
                         <th>Nama</th>
                         <th>Kelas</th>
                         <th>Username</th>
-                        <th>Password</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -41,7 +40,6 @@
                             </td>
                             <td>{{ $item->kelas }}</td>
                             <td>{{ $item->username }}</td>
-                            <td>{{ $item->password }}</td>
                             <td>
                                 <a href="/guru/{{ $item->id }}/edit" class="btn btn-warning btn-sm m1-2">Edit</a>
                                 <form action="/guru/{{ $item->id }}" method="POST" class="d-inline">

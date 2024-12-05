@@ -23,6 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('DashboardLogin'); //update path utama yang diakses ketika sudah login
     }
 }
