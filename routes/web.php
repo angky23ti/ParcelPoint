@@ -38,7 +38,7 @@ Route::middleware(['auth'])->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 
 Auth::routes();
 
