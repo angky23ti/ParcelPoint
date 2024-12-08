@@ -1,39 +1,39 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('password.store') }}">
-        @csrf
-
-        <!-- Password Reset Token -->
-        <input type="hidden" name="token" value="{{ $request->route('token') }}">
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+    <div class="w-full p-8 sm:p-12 md:p-16">
+        <div class="text-center mb-10">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold" style="color: #003366; margin-top: 1rem;">Sistem Ujian Online</h2>
+            <p class="text-sm sm:text-base md:text-lg" style="color: #003366; margin-top: 0.5rem;">Daftar untuk memulai ujian</p>
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
-        </div>
-    </form>
+        <form method="POST" action="{{ route('register') }}">
+            @csrf
+            <div class="mb-4">
+                <label for="name" class="block text-sm sm:text-base md:text-lg" style="color: #003366;">Nama</label>
+                <input type="text" id="name" name="name" class="w-full p-3 mt-1 border rounded bg-green-100 text-sm sm:text-base md:text-lg" required autofocus>
+            </div>
+            <div class="mb-4">
+                <label for="email" class="block text-sm sm:text-base md:text-lg" style="color: #003366;">Email</label>
+                <input type="email" id="email" name="email" class="w-full p-3 mt-1 border rounded bg-green-100 text-sm sm:text-base md:text-lg" required>
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-sm sm:text-base md:text-lg" style="color: #003366;">Password</label>
+                <input type="password" id="password" name="password" class="w-full p-3 mt-1 border rounded bg-green-100 text-sm sm:text-base md:text-lg" required>
+            </div>
+            <div class="mb-4">
+                <label for="password_confirmation" class="block text-sm sm:text-base md:text-lg" style="color: #003366;">Konfirmasi Password</label>
+                <input type="password" id="password_confirmation" name="password_confirmation" class="w-full p-3 mt-1 border rounded bg-green-100 text-sm sm:text-base md:text-lg" required>
+            </div>
+            <div class="mb-4">
+                <button type="submit" class="w-full px-8 py-4 bg-blue-600 text-white text-lg sm:text-xl md:text-2xl rounded-md hover:bg-blue-500 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50">
+                    Daftar
+                </button>
+            </div>
+            <!-- Reset Password -->
+            <div class="flex justify-between">
+                @if (Route::has('password.request'))
+                    <a href="{{ route('password.request') }}" class="text-sm sm:text-base md:text-lg" style="color: #003366; text-decoration: underline;">Lupa kata sandi?</a>
+                @endif
+            </div>
+        </form>
+    </div>
 </x-guest-layout>

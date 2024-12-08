@@ -11,7 +11,8 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    // Alihkan pengguna ke halaman login jika belum login
+    return redirect()->route('login');
 });
 
 Route::get('/dashboard', function () {
@@ -19,9 +20,11 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Routes Profile Default
+    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Routes Siswa
     // Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
@@ -30,6 +33,9 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('/siswa/{id}/edit', [SiswaController::class, 'edit'])->name('siswa.edit');
     // Route::patch('/siswa/{id}', [SiswaController::class, 'update'])->name('siswa.update');
     // Route::delete('/siswa/{id}', [SiswaController::class, 'destroy'])->name('siswa.destroy');
+
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+    Route::resource('profile', ProfileController::class);
     Route::resource('siswa', SiswaController::class);
     Route::resource('guru', GuruController::class);
     Route::resource('kelas', KelasController::class);

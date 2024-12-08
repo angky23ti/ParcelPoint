@@ -1,52 +1,52 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+    <div class="w-full p-8 sm:p-12 md:p-16">
+        <div class="text-center mb-10">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold" style="color: #003366; margin-top: 1rem;">Sistem Ujian Online</h2>
+            <p class="text-sm sm:text-base md:text-lg" style="color: #003366; margin-top: 0.5rem;">Daftar untuk memulai ujian</p>
+        </div><br>
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
+        <form method="POST" action="{{ route('register') }}">
+            @csrf
+            <div class="mb-4">
+                <label for="name" class="block text-sm sm:text-base md:text-lg" style="color: #003366;">Nama Lengkap</label>
+                <input type="text" id="name" name="name" class="w-full p-3 mt-1 border rounded bg-green-100 text-sm sm:text-base md:text-lg" required autofocus>
+            </div>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+            <div class="mb-4">
+                <label for="email" class="block text-sm sm:text-base md:text-lg" style="color: #003366;">Email</label>
+                <input type="email" id="email" name="email" class="w-full p-3 mt-1 border rounded bg-green-100 text-sm sm:text-base md:text-lg" required>
+            </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <div class="mb-4">
+                <label for="nik_nip" class="block text-sm sm:text-base md:text-lg" style="color: #003366;">NIK/NIP/NISN</label>
+                <input type="number" id="nik_nip" name="nik_nip" class="w-full p-3 mt-1 border rounded bg-green-100 text-sm sm:text-base md:text-lg" required>
+            </div>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
+            <div class="mb-4">
+                <label for="password" class="block text-sm sm:text-base md:text-lg" style="color: #003366;">Password</label>
+                <input type="password" id="password" name="password" class="w-full p-3 mt-1 border rounded bg-green-100 text-sm sm:text-base md:text-lg" required>
+            </div>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+            <div class="mb-4">
+                <label for="password_confirmation" class="block text-sm sm:text-base md:text-lg" style="color: #003366;">Konfirmasi Password</label>
+                <input type="password" id="password_confirmation" name="password_confirmation" class="w-full p-3 mt-1 border rounded bg-green-100 text-sm sm:text-base md:text-lg" required>
+            </div>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+            <div class="mb-4">
+                <button type="submit" class="w-full px-8 py-4 bg-blue-600 text-white text-lg sm:text-xl md:text-2xl rounded-md hover:bg-blue-500 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50">
+                    Daftar
+                </button>
+            </div>
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
+            <!-- Login Link -->
+            <div class="text-center mt-8">
+                <p class="text-sm text-gray-600">
+                    {{ __('Sudah punya akun?') }}
+                    <a href="{{ route('login') }}" class="text-indigo-600 hover:underline">
+                        {{ __('Masuk') }}
+                    </a>
+                </p>
+            </div>
+        </form>
+    </div>
 </x-guest-layout>
