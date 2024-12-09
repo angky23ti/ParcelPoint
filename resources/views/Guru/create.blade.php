@@ -1,4 +1,5 @@
 @extends('SideBar.navbar', ['title' => 'Tambah Data Guru'])
+
 @section('content')
     <div class="card">
         <div class="card-body">
@@ -7,7 +8,7 @@
             </center>
             <form action="/guru" method="POST" enctype="multipart/form-data">
                 @csrf
-                <!-- Input nip -->
+                <!-- Input NIP -->
                 <div class="form-group mt-1 mb-3">
                     <label for="nip"><b>NIP</b></label>
                     <div class="input-group">
@@ -16,9 +17,7 @@
                                 <i class="bi bi-person"></i>
                             </span>
                         </div>
-                        <input type="text"
-                               class="form-control @error('nip') is-invalid @enderror"
-                               id="nip" name="nip" placeholder="Masukkan nip" value="{{ old('nip') }}">
+                        <input type="text" class="form-control @error('nip') is-invalid @enderror" id="nip" name="nip" placeholder="Masukkan NIP" value="{{ old('nip') }}">
                     </div>
                     <span class="text-danger">{{ $errors->first('nip') }}</span>
                 </div>
@@ -32,14 +31,12 @@
                                 <i class="bi bi-person"></i>
                             </span>
                         </div>
-                        <input type="text"
-                               class="form-control @error('nama') is-invalid @enderror"
-                               id="nama" name="nama" placeholder="Masukkan nama lengkap" value="{{ old('nama') }}">
+                        <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" placeholder="Masukkan nama lengkap" value="{{ old('nama') }}">
                     </div>
                     <span class="text-danger">{{ $errors->first('nama') }}</span>
                 </div>
 
-                <!-- Input Kelas -->
+                <!-- Input Kelas (Dropdown) -->
                 <div class="form-group mt-1 mb-3">
                     <label for="kelas"><b>Kelas</b></label>
                     <div class="input-group">
@@ -48,8 +45,14 @@
                                 <i class="bi bi-building"></i>
                             </span>
                         </div>
-                        <input type="text" class="form-control @error('kelas') is-invalid @enderror"
-                               id="kelas" name="kelas" placeholder="Masukkan kelas" value="{{ old('kelas') }}">
+                        <select class="form-control @error('kelas') is-invalid @enderror" id="kelas" name="kelas">
+                            <option value="" disabled selected>Pilih Kelas</option>
+                            @foreach($kelas as $k)
+                                <option value="{{ $k->id }}" {{ old('kelas') == $k->id ? 'selected' : '' }}>
+                                    {{ $k->nama }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <span class="text-danger">{{ $errors->first('kelas') }}</span>
                 </div>
@@ -97,6 +100,7 @@
                     </div>
                     <span class="text-danger">{{ $errors->first('foto') }}</span>
                 </div>
+
                 <button type="submit" class="btn btn-primary w-100">SIMPAN</button>
             </form>
         </div>

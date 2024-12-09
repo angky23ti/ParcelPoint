@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Guru;
+use App\Models\Kelas;
 use App\Http\Requests\StoreGuruRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdateGuruRequest;
@@ -11,115 +12,118 @@ class GuruController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
+     * @return \Illuminate\View\View
      */
-
     public function index()
     {
-         // dd() -> function untuk melihat isi variabel $guru
-        $guru = \App\Models\Guru::latest()->paginate(10);
+        $guru = Guru::latest()->paginate(10); // Ambil data guru terbaru
         return view('guru.index', compact('guru'));
     }
 
     /**
      * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\View\View
      */
     public function create()
     {
-        return view('guru.create');
+        $kelas = Kelas::all();  // Ambil semua data kelas
+        return view('guru.create', compact('kelas'));  // Mengirim data kelas ke view
     }
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param \App\Http\Requests\StoreGuruRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(StoreguruRequest $request)
+    public function store(StoreGuruRequest $request)
     {
-        $requestData = $request->validate([
-            'nip' => 'nullable|unique:gurus,nip', // Validasi unique untuk nisn
-            'nama' => 'nullable',
-            'kelas' => 'nullable',
-            'username' => 'nullable|unique:gurus,username', // Validasi unique untuk username
-            'password' => 'required',
-            'foto' => 'image|mimes:jpeg,png,jpg|max:2000', // Validasi foto
-        ]);
+        // Validasi dan ambil data dari request
+        $requestData = $request->validated();
 
-        $guru = new \App\Models\guru(); // Membuat objek guru baru
-        $guru->fill($requestData); // Mengisi data guru dengan data yang sudah divalidasi
+        // Membuat objek guru baru
+        $guru = new Guru();
+        $guru->fill($requestData); // Isi data guru dengan request data
 
-        // Menyimpan foto ke folder 'guru_foto' di disk 'public'
-        $guru->foto = $request->file('foto')->store('guru_foto', 'public');
+        // Jika ada foto yang di-upload, simpan di folder 'guru_foto'
+        if ($request->hasFile('foto')) {
+            $guru->foto = $request->file('foto')->store('guru_foto', 'public');
+        }
 
-        $guru->save(); // Menyimpan data guru ke database
+        $guru->save(); // Simpan data guru ke database
 
         // Redirect ke halaman guru dengan pesan sukses
-        return redirect('/guru')->with('success', 'Data guru berhasil ditambahkan!');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(guru $guru)
-    {
-        //
+        return redirect()->route('guru.index')->with('success', 'Data guru berhasil ditambahkan!');
     }
 
     /**
      * Show the form for editing the specified resource.
+     *
+     * @param string $id
+     * @return \Illuminate\View\View
      */
     public function edit(string $id)
     {
-        $data['guru'] = \App\Models\guru::findOrFail($id);
-        return view('guru.edit', $data);
+        $guru = Guru::findOrFail($id);  // Cari data guru berdasarkan ID
+        return view('guru.edit', compact('guru'));
     }
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param \App\Http\Requests\UpdateGuruRequest $request
+     * @param string $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateguruRequest $request, string $id)
+    public function update(UpdateGuruRequest $request, string $id)
     {
+        // Validasi dan ambil data dari request
+        $requestData = $request->validated();
 
-        $requestData = $request->validate([
-            'nisn' => 'nullable|unique:gurus,nip,' . $id, 
-            'nama' => 'nullable',
-            'kelas' => 'nullable',
-            'username' => 'nullable|unique:gurus,username,' . $id,
-            'password' => 'required',
-            'foto' => 'image|mimes:jpeg,png,jpg|max:2000',
-        ]);
+        // Cari guru berdasarkan ID
+        $guru = Guru::findOrFail($id);
+        $guru->fill($requestData); // Isi data guru dengan request data
 
-        $guru = \App\Models\guru::findOrFail($id);
-
-        $guru->fill($requestData);
-
+        // Jika password diubah, enkripsi password
         if (!empty($requestData['password'])) {
             $guru->password = bcrypt($requestData['password']);
         }
 
-
+        // Jika ada foto baru, hapus foto lama dan simpan foto baru
         if ($request->hasFile('foto')) {
             if ($guru->foto && Storage::disk('public')->exists($guru->foto)) {
-                Storage::disk('public')->delete($guru->foto);
+                Storage::disk('public')->delete($guru->foto); // Hapus foto lama
             }
-            $guru->foto = $request->file('foto')->store('guru_foto', 'public'); // Disimpan di folder 'guru_foto'
+            $guru->foto = $request->file('foto')->store('guru_foto', 'public'); // Simpan foto baru
         }
 
-        $guru->save();
+        $guru->save(); // Simpan data guru ke database
 
-        return redirect('/guru')->with('success', 'Data guru berhasil diupdate.');
+        // Redirect ke halaman guru dengan pesan sukses
+        return redirect()->route('guru.index')->with('success', 'Data guru berhasil diupdate.');
     }
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param string $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(string $id)
     {
-        $guru = \App\Models\guru::findOrFail($id);
+        // Cari guru berdasarkan ID
+        $guru = Guru::findOrFail($id);
 
-        if ($guru->foto != null && Storage::disk('public')->exists($guru->foto)) {
+        // Hapus foto jika ada
+        if ($guru->foto && Storage::disk('public')->exists($guru->foto)) {
             Storage::disk('public')->delete($guru->foto);
         }
 
-        $guru->delete();
+        $guru->delete(); // Hapus data guru dari database
 
-        return redirect('/guru')->with('success', 'Data guru berhasil dihapus.');
+        // Redirect ke halaman guru dengan pesan sukses
+        return redirect()->route('guru.index')->with('success', 'Data guru berhasil dihapus.');
     }
 }

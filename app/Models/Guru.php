@@ -10,4 +10,9 @@ class Guru extends Model
     /** @use HasFactory<\Database\Factories\GuruFactory> */
     use HasFactory;
     protected $guarded= [];
+
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class); // Siswa berafiliasi dengan Kelas
+    }
 }
