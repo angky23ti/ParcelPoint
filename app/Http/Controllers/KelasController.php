@@ -37,12 +37,12 @@ class KelasController extends Controller
         $requestData = $request->validate([
             'nama' => 'nullable',
             'lantai' => 'nullable',
-            'wali_kelas' => 'nullable', 
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2000', 
-        ]); 
+            'wali_kelas' => 'nullable',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2000',
+        ]);
 
         $kelas = new \App\Models\Kelas();
-        $kelas->fill($requestData); 
+        $kelas->fill($requestData);
 
         if ($request->hasFile('foto')) {
             $kelas->foto = $request->file('foto')->store('kelas_foto', 'public');
@@ -58,7 +58,9 @@ class KelasController extends Controller
      */
     public function show(Kelas $kelas)
     {
-        //Untuk Menampilkan Detail
+        // Mengambil semua siswa yang terkait dengan kelas ini
+        $siswas = $kelas->siswas;
+        return view('kelas.show', compact('kelas', 'siswas'));
     }
 
     /**
@@ -79,8 +81,8 @@ class KelasController extends Controller
         $requestData = $request->validate([
             'nama' => 'nullable',
             'lantai' => 'nullable',
-            'wali_kelas' => 'nullable', 
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2000', 
+            'wali_kelas' => 'nullable',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2000',
         ]);
 
         $kelas = \App\Models\Kelas::findOrFail($id);

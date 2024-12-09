@@ -36,7 +36,7 @@
                                 @endif
                                 {{ $item->nama }}
                             </td>
-                            <td>{{ $item->kelas }}</td>
+                            <td>{{ $item->kelas ? $item->kelas->nama : 'Belum Ditentukan' }}</td>
                             <td>{{ $item->username }}</td>
                             <td>
                                 <a href="/siswa/{{ $item->id }}/edit" class="btn btn-warning btn-sm m1-2">Edit</a>

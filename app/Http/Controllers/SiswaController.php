@@ -14,8 +14,7 @@ class SiswaController extends Controller
      */
     public function index()
     {
-         // dd() -> function untuk melihat isi variabel $siswa
-        $siswa = \App\Models\Siswa::latest()->paginate(10);
+        $siswa = \App\Models\Siswa::with('kelas')->latest()->paginate(10);
         return view('siswa.index', compact('siswa'));
     }
 
@@ -24,36 +23,36 @@ class SiswaController extends Controller
      */
     public function create()
     {
-        return view('siswa.create');
+        $kelas = \App\Models\Kelas::all();  // Ambil semua data kelas
+        return view('siswa.create', compact('kelas'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreSiswaRequest $request)
-    {
-        // Validasi data dari request
-        $requestData = $request->validate([
-            'nisn' => 'nullable|unique:siswas,nisn', 
-            'nama' => 'nullable',
-            'kelas' => 'nullable',
-            'username' => 'nullable|unique:siswas,username', 
-            'password' => 'required',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2000', 
-        ]);
+{
+    // Validasi input, termasuk kelas_id
+    $requestData = $request->validate([
+        'nisn' => 'nullable|unique:siswas,nisn',
+        'nama' => 'nullable',
+        'kelas_id' => 'nullable|exists:kelas,id',  // Pastikan kelas_id ada di tabel kelas
+        'username' => 'nullable|unique:siswas,username',
+        'password' => 'required',
+        'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2000',
+    ]);
 
-        $siswa = new \App\Models\Siswa();
-        $siswa->fill($requestData); 
+    $siswa = new Siswa();
+    $siswa->fill($requestData); // Isi data siswa
 
-        if ($request->hasFile('foto')) {
-            $siswa->foto = $request->file('foto')->store('siswa_foto', 'public');
-        }
-
-        $siswa->save();
-
-        return redirect('/siswa')->with('success', 'Data siswa berhasil ditambahkan!');
+    if ($request->hasFile('foto')) {
+        $siswa->foto = $request->file('foto')->store('siswa_foto', 'public');
     }
 
+    $siswa->save();
+
+    return redirect('/siswa')->with('success', 'Data siswa berhasil ditambahkan!');
+}
     /**
      * Display the specified resource.
      */
@@ -77,16 +76,15 @@ class SiswaController extends Controller
     public function update(UpdateSiswaRequest $request, string $id)
     {
         $requestData = $request->validate([
-            'nisn' => 'nullable|unique:siswas,nisn,' . $id, 
+            'nisn' => 'nullable|unique:siswas,nisn,' . $id,
             'nama' => 'nullable',
-            'kelas' => 'nullable',
-            'username' => 'nullable|unique:siswas,username,' . $id, 
-            'password' => 'required', 
-            'foto' => 'image|mimes:jpeg,png,jpg|max:2000', 
+            'kelas_id' => 'nullable|exists:kelas,id',  // Pastikan kelas_id ada di tabel kelas
+            'username' => 'nullable|unique:siswas,username,' . $id,
+            'password' => 'required',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2000',
         ]);
 
-        $siswa = \App\Models\Siswa::findOrFail($id);
-
+        $siswa = Siswa::findOrFail($id);
         $siswa->fill($requestData);
 
         if ($request->filled('password')) {
@@ -97,7 +95,7 @@ class SiswaController extends Controller
             if ($siswa->foto && Storage::disk('public')->exists($siswa->foto)) {
                 Storage::disk('public')->delete($siswa->foto);
             }
-        $siswa->foto = $request->file('foto')->store('siswa_foto', 'public');
+            $siswa->foto = $request->file('foto')->store('siswa_foto', 'public');
         }
 
         $siswa->save();

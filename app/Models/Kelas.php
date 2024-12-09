@@ -10,4 +10,9 @@ class Kelas extends Model
     /** @use HasFactory<\Database\Factories\KelasFactory> */
     use HasFactory;
     protected $guarded= [];
+
+    public function siswas()
+    {
+        return $this->hasMany(Siswa::class); // Kelas memiliki banyak siswa
+    }
 }

@@ -1,4 +1,5 @@
 @extends('SideBar.navbar', ['title' => 'Tambah Data Siswa'])
+
 @section('content')
     <div class="card">
         <div class="card-body">
@@ -39,7 +40,7 @@
                     <span class="text-danger">{{ $errors->first('nama') }}</span>
                 </div>
 
-                <!-- Input Kelas -->
+                <!-- Input Kelas (Dropdown) -->
                 <div class="form-group mt-1 mb-3">
                     <label for="kelas"><b>Kelas</b></label>
                     <div class="input-group">
@@ -48,8 +49,14 @@
                                 <i class="bi bi-building"></i>
                             </span>
                         </div>
-                        <input type="text" class="form-control @error('kelas') is-invalid @enderror"
-                               id="kelas" name="kelas" placeholder="Masukkan kelas" value="{{ old('kelas') }}">
+                        <select class="form-control @error('kelas') is-invalid @enderror" id="kelas" name="kelas">
+                            <option value="" disabled selected>Pilih Kelas</option>
+                            @foreach($kelas as $k)
+                                <option value="{{ $k->id }}" {{ old('kelas') == $k->id ? 'selected' : '' }}>
+                                    {{ $k->nama }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <span class="text-danger">{{ $errors->first('kelas') }}</span>
                 </div>
@@ -97,6 +104,7 @@
                     </div>
                     <span class="text-danger">{{ $errors->first('foto') }}</span>
                 </div>
+
                 <button type="submit" class="btn btn-primary w-100">SIMPAN</button>
             </form>
         </div>
