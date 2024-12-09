@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="css/sideBarCSS.css">
 </head>
 <body>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Popup -->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
     <aside class="left-sidebar">

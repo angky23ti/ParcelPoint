@@ -23,7 +23,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Cek jika ada data -->
                     @forelse ($kelas as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
@@ -39,26 +38,73 @@
                             <td>{{ $item->wali_kelas }}</td>
                             <td>
                                 <a href="/kelas/{{ $item->id }}/edit" class="btn btn-warning btn-sm m1-2">Edit</a>
-                                <form action="/kelas/{{ $item->id }}" method="POST" class="d-inline">
+                                <form action="/kelas/{{ $item->id }}" method="POST" class="d-inline" id="deleteForm-{{ $item->id }}">
                                     @csrf
                                     @method('delete')
-                                    <button class="btn btn-danger btn-sm ml-2"
-                                    onclick="return confirm('Yakin ingin menghapus data?')">Hapus</button>
+                                    <button type="button" class="btn btn-danger btn-sm ml-2" onclick="confirmDelete({{ $item->id }})">Hapus</button>
                                 </form>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="text-center">No data available</td>
+                            <td colspan="5" class="text-center">No data available</td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
 
-            <!-- Pagination -->
             <div class="d-flex justify-content-center">
                 {!! $kelas->links() !!}
             </div>
         </div>
     </div>
+
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "{{ session('success') }}",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+    @endif
+
+    <script>
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-success",
+                cancelButton: "btn btn-danger"
+            },
+            buttonsStyling: false
+        });
+
+        function confirmDelete(id) {
+            swalWithBootstrapButtons.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('deleteForm-' + id).submit();
+                    swalWithBootstrapButtons.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                    });
+                } else {
+                    swalWithBootstrapButtons.fire({
+                        title: "Cancelled",
+                        text: "Your imaginary file is safe :)",
+                        icon: "error"
+                    });
+                }
+            });
+        }
+    </script>
 @endsection
