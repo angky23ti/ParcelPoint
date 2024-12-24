@@ -29,7 +29,6 @@
       <!-- RTL Css -->
       <link rel="stylesheet" href="{{ url('../assets/css/rtl.min.css') }}"/>
 
-
   </head>
   <body class="  ">
     <!-- loader Start -->
@@ -820,10 +819,6 @@
                     </div>
                 </div>
                 <!--logo End-->
-
-
-
-
                 <h4 class="logo-title">Hope UI</h4>
             </a>
             <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
@@ -897,7 +892,7 @@
                         <div class="p-0 card-body">
                             <a href="#" class="iq-sub-card">
                               <div class="d-flex align-items-center">
-                                  <img class="p-1 avatar-40 rounded-pill bg-soft-primary" src="../assets/images/shapes/01.png" alt="">
+                                  <img class="p-1 avatar-40 rounded-pill bg-soft-primary" src="{{ url('../assets/images/shapes/01.png') }}" alt="">
                                   <div class="ms-3 w-100">
                                     <h6 class="mb-0 ">Emma Watson Bni</h6>
                                     <div class="d-flex justify-content-between align-items-center">
@@ -910,7 +905,7 @@
                             <a href="#" class="iq-sub-card">
                               <div class="d-flex align-items-center">
                                   <div class="">
-                                    <img class="p-1 avatar-40 rounded-pill bg-soft-primary" src="../assets/images/shapes/02.png" alt="">
+                                    <img class="p-1 avatar-40 rounded-pill bg-soft-primary" src="{{ url('../assets/images/shapes/02.png') }}" alt="">
                                   </div>
                                   <div class="ms-3 w-100">
                                     <h6 class="mb-0 ">New customer is join</h6>
@@ -923,7 +918,7 @@
                             </a>
                             <a href="#" class="iq-sub-card">
                               <div class="d-flex align-items-center">
-                                  <img class="p-1 avatar-40 rounded-pill bg-soft-primary" src="../assets/images/shapes/03.png" alt="">
+                                  <img class="p-1 avatar-40 rounded-pill bg-soft-primary" src="{{ url('../assets/images/shapes/03.png') }}" alt="">
                                   <div class="ms-3 w-100">
                                     <h6 class="mb-0 ">Two customer is left</h6>
                                     <div class="d-flex justify-content-between align-items-center">
